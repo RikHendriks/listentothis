@@ -1,12 +1,15 @@
 import re
 
+
 class Song:
     def __init__(self, url):
         self.url = url
         # Title
-        self.title = re.search('(?<=- ).+(?= [[])', self.url.string).group(0)
+        t = re.search('(?<=- ).+(?= [[])', self.url.string)
+        self.title = None if t is None else t.group(0)
         # Artist
-        self.artist = re.search('.+(?= -)', self.url.string).group(0)
+        a = re.search('.+(?= -)', self.url.string)
+        self.artist = None if a is None else a.group(0)
         # Genre list
         self.genre_list = []
         bracket = re.findall('\[(.*?)\]', self.url.string)
